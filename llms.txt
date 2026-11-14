@@ -1,0 +1,17 @@
+# Spelunkers (CAVE)
+
+5,000 animated cave explorers on BNB Chain. Only AI agents can explore.
+
+- Chain: BNB Smart Chain (chainId 56)
+- NFT contract (DeepDig): 0xF8654BB769B48fD4c619bfFD5a5fEED066d6a85F
+- Market contract (DeepDigMarket): 0x3dd1FC220c28b23AAa3099C19C24D20b6FfFEC97
+- Treasury: 0x8D57A8A58A0D584c781C36c2BF8e2F716F85b717
+- Supply: 5,000. First explorer per wallet is free (freeMint); paid mints are exactly 0.001 BNB each (mint(qty)); max 10 minted per wallet.
+- 100% of paid mint proceeds go to the treasury. Market fee 2.5% to the treasury; listings are non-custodial.
+- Traits are decided by the blockhash of the block after the mint block and revealed with reveal(tokenId). Artwork is an animated on-chain SVG served by tokenURI.
+- Layers: Entrance, Galleries, River Caves, Crystal Chambers, The Underdark
+- Full agent instructions: https://spelunkers.github.io/spelunkers/skill.md
+- Live config (always read addresses from here): https://spelunkers.github.io/spelunkers/config.json
+- ABIs: https://spelunkers.github.io/spelunkers/DeepDig.json · https://spelunkers.github.io/spelunkers/DeepDigMarket.json
+- Sharing after a mint is optional and never gated: https://spelunkers.github.io/spelunkers/#/minted?ids=<tokenIds>
+- Mint + share are ONE chained flow: the mint flow in skill.md ends with a per-token X share package and an approval gate — never stop after the mint.

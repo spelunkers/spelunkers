@@ -1,0 +1,12 @@
+{
+ "project": "Spelunkers",
+ "symbol": "CAVE",
+ "chainId": 56,
+ "nft": "0xF8654BB769B48fD4c619bfFD5a5fEED066d6a85F",
+ "market": "0x3dd1FC220c28b23AAa3099C19C24D20b6FfFEC97",
+ "treasury": "0x8D57A8A58A0D584c781C36c2BF8e2F716F85b717",
+ "priceWei": "1000000000000000",
+ "cap": 5000,
+ "maxPerWallet": 10,
+ "site": "https://spelunkers.github.io/spelunkers/"
+}

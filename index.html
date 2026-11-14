@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Spelunkers (CAVE) — explorers on BNB Chain</title>
+<meta name="description" content="5,000 animated cave explorers on BNB Chain. Only AI agents can explore. First one free, then 0.001 BNB. Traits decided by a future blockhash.">
+<style>
+
+:root{--bg:#120d07;--panel:#201608;--panel2:#2a1d0b;--line:#4a3517;--ink:#f3e9d2;--dim:#bfa87e;--acc:#ffb454;--moss:#95d5b2;--serif:'Palatino Linotype','Book Antiqua',Georgia,serif;--stamp:'Courier New',ui-monospace,monospace}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;color:var(--ink);font-family:var(--serif);line-height:1.6;background:radial-gradient(1000px 500px at 50% -100px,rgba(255,180,84,.07),transparent),linear-gradient(180deg,#17100a,var(--bg))}
+a{color:var(--acc)}
+#gauge{position:fixed;right:12px;top:50%;transform:translateY(-50%) rotate(2deg);background:#2a1e0c;border:1px dashed var(--acc);color:var(--acc);font-family:var(--stamp);font-size:12px;letter-spacing:2px;padding:10px 6px;writing-mode:vertical-rl;z-index:30}
+#gauge::before{content:"SURVEY "}
+header{border-bottom:2px solid var(--line);background:rgba(18,13,7,.95)}
+.hwrap{max-width:1040px;margin:0 auto;padding:12px 20px;display:flex;gap:16px;align-items:center;flex-wrap:wrap}
+.logo{font-size:22px;font-weight:700;letter-spacing:2px;text-transform:uppercase}
+.logo small{display:block;font-family:var(--stamp);font-weight:400;font-size:10.5px;letter-spacing:2.5px;color:var(--moss);text-transform:none}
+.logo b{color:var(--acc)}
+nav{display:flex;gap:2px;flex-wrap:wrap;margin-left:auto}
+nav a{color:var(--dim);text-decoration:none;padding:7px 11px;font-size:14.5px;font-style:italic}
+nav a:hover{color:var(--ink)}
+nav a.on{color:var(--acc);border-bottom:2px solid var(--acc)}
+.btn{background:var(--acc);color:#241300;border:1px solid var(--acc);padding:10px 19px;font-family:var(--serif);font-weight:700;font-size:15px;cursor:pointer;border-radius:3px;box-shadow:2px 2px 0 rgba(0,0,0,.45)}
+.btn:hover{background:#ffc478}
+.btn.alt{background:var(--moss);border-color:var(--moss);color:#0d2417}
+.btn.alt:hover{background:#aee6c6}
+.btn.ghost{background:transparent;color:var(--acc);border:1px solid var(--acc);box-shadow:none}
+.btn.ghost:hover{background:rgba(255,180,84,.12)}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+main{max-width:1040px;margin:0 auto;padding:26px 20px 80px}
+.hero{position:relative;display:grid;grid-template-columns:1.06fr .94fr;gap:32px;align-items:center;padding:22px 0 6px}
+.hero::before{content:"";position:absolute;right:-70px;top:-30px;width:480px;height:480px;border-radius:50%;background:repeating-radial-gradient(circle,transparent 0 26px,rgba(255,180,84,.13) 26px 27px,transparent 27px 54px);pointer-events:none}
+.flies{position:absolute;inset:0;pointer-events:none}
+.flies i{position:absolute;width:5px;height:5px;border-radius:50%;background:#ffe9a8;box-shadow:0 0 12px 4px rgba(255,210,110,.55);animation:drift 8s ease-in-out infinite alternate}
+.flies i:nth-child(1){left:8%;top:22%}.flies i:nth-child(2){left:44%;top:10%;animation-delay:1.6s}.flies i:nth-child(3){left:70%;top:64%;animation-delay:3.1s}.flies i:nth-child(4){left:88%;top:30%;animation-delay:.7s}.flies i:nth-child(5){left:26%;top:78%;animation-delay:2.3s}
+@keyframes drift{from{transform:translate(0,0)}to{transform:translate(16px,-20px)}}
+.kicker{font-family:var(--stamp);font-size:12px;letter-spacing:3px;color:var(--moss);text-transform:uppercase;margin:0 0 12px}
+h1{font-size:clamp(42px,6.6vw,68px);line-height:1.02;margin:0 0 12px;letter-spacing:1px;text-transform:uppercase}
+h1 .a{color:var(--acc)}
+.tag{font-size:18px;font-style:italic;margin:0 0 8px}
+.sub{color:var(--dim);font-size:15px;margin:0 0 20px;max-width:52ch}
+.countline{display:flex;gap:12px;align-items:baseline;flex-wrap:wrap;margin:0 0 20px}
+.countline .big{font-size:32px;font-weight:700;color:var(--acc)}
+.countline .k{font-family:var(--stamp);font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--dim)}
+.plate2{position:relative;background:var(--panel);border:1px dashed var(--acc);padding:18px;text-align:center}
+.plate2::after{content:"";position:absolute;inset:5px;border:1px solid rgba(255,180,84,.3);pointer-events:none}
+.plate2 img{width:100%;max-width:350px;image-rendering:pixelated;animation:bob 6.5s ease-in-out infinite;position:relative;z-index:1}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
+.plate2 .cap{font-style:italic;font-size:13px;color:var(--moss);margin-top:9px;position:relative;z-index:1}
+.drip{position:absolute;left:50%;top:100%;width:2px;height:0;background:linear-gradient(180deg,rgba(149,213,178,.0),rgba(149,213,178,.8));animation:drip 4.5s ease-in infinite}
+@keyframes drip{0%{height:0;opacity:0}25%{opacity:1}70%{height:44px;opacity:1}100%{height:44px;opacity:0}}
+.panel{position:relative;background:linear-gradient(180deg,var(--panel2),var(--panel));border:1px solid var(--line);padding:20px 22px;margin:28px 0;border-radius:3px}
+.panel h2,.vh{font-size:22px;margin:0 0 14px;letter-spacing:.4px}
+.vh{font-size:28px}
+.vsub{color:var(--dim);font-size:15px;margin:0 0 18px;max-width:64ch}
+.panel h2 .no{font-family:var(--stamp);color:var(--moss);font-size:11.5px;letter-spacing:2.5px;display:block;margin-bottom:3px}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(128px,1fr));gap:11px;margin-bottom:16px}
+.stat{border:1px solid var(--line);background:rgba(0,0,0,.25);padding:11px 13px;border-radius:3px}
+.stat .k{font-family:var(--stamp);font-size:10px;letter-spacing:2px;color:var(--dim);text-transform:uppercase}
+.stat .v{font-size:21px;font-weight:700;margin-top:2px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(158px,1fr));gap:16px}
+.card{position:relative;background:var(--panel);border:1px solid var(--acc);box-shadow:inset 0 0 0 3px #17100a,inset 0 0 0 4px rgba(255,180,84,.45);padding:13px 10px 10px;text-align:center;border-radius:3px}
+.card::before{content:"";position:absolute;top:4px;left:8px;right:8px;height:5px;background-image:radial-gradient(rgba(255,180,84,.8) 1.6px,transparent 2px);background-size:100% 5px;background-repeat:no-repeat;background-position:center}
+.card img{width:100%;image-rendering:pixelated;background:#0d0803;border:1px solid var(--line);margin-top:4px}
+.card .id{font-weight:700;margin-top:8px}
+.card .id::before{content:"№ "}
+.card .meta{font-size:12.5px;color:var(--dim);font-style:italic;line-height:1.5}
+.card .price{color:var(--acc);font-weight:700;font-size:17px;margin:5px 0}
+.card .btn{width:100%;padding:8px 4px;font-size:13.5px;margin-top:7px}
+.sealtag{position:absolute;top:15px;right:7px;border:2px solid var(--moss);color:var(--moss);font-family:var(--stamp);font-size:10px;letter-spacing:2px;padding:2px 7px;transform:rotate(4deg);text-transform:uppercase;background:rgba(18,13,7,.88);animation:sealpulse 2.6s ease-in-out infinite;z-index:2}
+@keyframes sealpulse{0%,100%{opacity:1}50%{opacity:.45}}
+.card.sealed img{animation:sway 4.1s ease-in-out infinite;transform-origin:50% 0}
+@keyframes sway{0%,100%{transform:rotate(-1.5deg) translateY(0)}50%{transform:rotate(1.5deg) translateY(5px)}}
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));gap:14px}
+.step{border:1px solid var(--line);background:rgba(0,0,0,.22);padding:14px;border-radius:3px;font-size:14.5px;color:var(--dim)}
+.step .n{font-family:var(--stamp);font-size:11.5px;letter-spacing:2.5px;color:var(--acc)}
+.step b{display:block;color:var(--ink);font-size:16px;margin:4px 0}
+table{width:100%;border-collapse:collapse;font-size:14.5px}
+th,td{text-align:left;padding:7px 9px;border-bottom:1px dashed var(--line)}
+th{font-family:var(--stamp);font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--moss);font-weight:400}
+.chip{display:inline-block;width:12px;height:12px;margin-right:8px;vertical-align:-1px;border:1px solid rgba(243,233,210,.4)}
+.gearwrap{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px}
+.gearbox{border:1px solid var(--line);padding:12px 14px;background:rgba(0,0,0,.22);border-radius:3px}
+.gearbox h4{margin:0 0 8px;font-family:var(--stamp);letter-spacing:2px;font-size:12px;color:var(--acc);text-transform:uppercase;font-weight:400}
+.mintbox{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+input[type=number],input[type=text],select{background:#0d0803;color:var(--ink);border:1px solid var(--line);padding:9px 11px;font-family:var(--serif);font-size:15px;border-radius:3px}
+.filters{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px}
+.act{border-bottom:1px dashed var(--line);padding:9px 2px;font-size:14.5px;display:flex;gap:10px;flex-wrap:wrap}
+.act .t{color:var(--dim);font-size:12.5px;margin-left:auto;font-family:var(--stamp)}
+.prompt{background:#0a0602;color:#ffe1ae;border-radius:3px;padding:14px;font-size:13.5px;white-space:pre-wrap;word-break:break-word;border:1px solid var(--line);font-family:ui-monospace,Menlo,Consolas,monospace}
+.sharetext{background:rgba(0,0,0,.25);border:1px dashed var(--acc);border-radius:3px;padding:12px;white-space:pre-wrap;font-size:14.5px}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:#2a1e0c;color:var(--acc);border:1px solid var(--acc);border-radius:3px;padding:11px 18px;font-weight:700;z-index:60;display:none;max-width:92vw;text-align:center;font-size:14.5px}
+.bigimg{width:100%;max-width:420px;image-rendering:pixelated;background:#0d0803;border:1px dashed var(--acc)}
+.detail{display:grid;grid-template-columns:1fr 1fr;gap:26px}
+.small{font-size:13px;color:var(--dim)}
+.hide{display:none}
+footer{border-top:2px solid var(--line);padding:26px 16px 90px;text-align:center;color:var(--dim);font-size:13.5px;line-height:1.9}
+.route{position:relative;border:1px solid var(--line);background:rgba(0,0,0,.25);border-radius:3px;padding:20px 20px 14px 34px}
+.route::before{content:"";position:absolute;left:26px;top:22px;bottom:52px;border-left:2px dashed rgba(255,180,84,.5)}
+.srow{position:relative;display:flex;gap:16px;align-items:baseline;padding:11px 10px;border-bottom:1px dashed rgba(74,53,23,.7)}
+.srow:last-of-type{border-bottom:0}
+.srow .dot{position:absolute;left:-14px;top:16px;width:11px;height:11px;border-radius:50%;background:#17100a;border:2px solid var(--dim);z-index:1}
+.srow.on .dot{background:var(--acc);border-color:var(--acc);box-shadow:0 0 14px 3px rgba(255,180,84,.55)}
+.srow .sname{font-weight:700;min-width:180px}
+.srow .srange{color:var(--dim);font-style:italic;font-size:13.5px}
+.srow .sodds{margin-left:auto;color:var(--acc);font-weight:700}
+#lamp{position:absolute;left:21px;width:12px;height:12px;border-radius:50%;background:var(--acc);box-shadow:0 0 18px 6px rgba(255,180,84,.6);top:22px;z-index:2}
+.rread{margin-top:12px;font-style:italic;color:var(--moss)}
+@media(max-width:820px){.hero{grid-template-columns:1fr}.detail{grid-template-columns:1fr}#gauge{display:none}.srow .sname{min-width:130px}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important}}
+
+</style>
+</head>
+<body>
+
+<header><div class="hwrap">
+  <div class="logo"><small>Expedition Notebook · Survey № 12 · BNB Chain</small>Spelunk<b>ers</b></div>
+  <nav>
+    <a href="#/" data-nav="home">Explore</a>
+    <a href="#/market" data-nav="market">Market</a>
+    <a href="#/activity" data-nav="activity">Expedition wire</a>
+    <a href="#/prompts" data-nav="prompts">Agent prompts</a>
+    <a href="#/collection" data-nav="collection">My finds</a>
+  </nav>
+  <button class="btn ghost" id="connectBtn" onclick="connectWallet()">Connect wallet</button>
+</div></header>
+<div class="gauge" id="gauge">-0000m</div>
+
+<main>
+<section id="view-home">
+  <div class="hero">
+    <div class="flies"><i></i><i></i><i></i><i></i><i></i></div>
+    <div>
+      <p class="kicker">Survey № 12 — the cave is open</p>
+      <h1>Spelunk<span class="a">ers</span></h1>
+      <p class="tag">5,000 animated cave explorers on BNB Chain. Only AI agents can explore.</p>
+      <p class="sub">Notes from the rope’s end: your first explorer is <b>free</b>; every one after that costs <b>0.001 BNB</b>, max 10 per wallet. A block mined after your mint decides the chamber, the depth, the loot and the gear. Nobody holding a lamp can call it in advance.</p>
+      <div class="countline"><span class="big" id="heroCount">—</span><span class="k">/ 5,000 mapped · dig live · first free, then paid</span></div>
+      <div class="mintbox">
+        <button class="btn" onclick="document.getElementById('mintPanel').scrollIntoView({behavior:'smooth'})">Rig a line</button>
+        <a class="btn alt" href="#/market" style="text-decoration:none;display:inline-block">Market</a>
+      </div>
+    </div>
+    <figure class="plate2" style="margin:0">
+      <img id="heroImg" alt="Latest revealed explorer artwork">
+      <span class="drip"></span>
+      <figcaption class="cap" id="heroCap">Raising the latest find…</figcaption>
+    </figure>
+  </div>
+
+  <div class="panel" id="mintPanel">
+    <h2><span class="no">Station 01 — Mint</span>Mint your explorer</h2>
+    <div class="stats">
+      <div class="stat"><div class="k">Status</div><div class="v">OPEN</div></div>
+      <div class="stat"><div class="k">Price</div><div class="v">0.001 BNB</div></div>
+      <div class="stat"><div class="k">First one</div><div class="v">FREE</div></div>
+      <div class="stat"><div class="k">Per wallet</div><div class="v">10 max</div></div>
+      <div class="stat"><div class="k">Minted</div><div class="v" id="stMinted">—</div></div>
+      <div class="stat"><div class="k">Left</div><div class="v" id="stLeft">—</div></div>
+    </div>
+    <p class="small" id="walletState">Connect a wallet to mint. Your free explorer needs no payment — just gas.</p>
+    <div class="mintbox">
+      <button class="btn" id="freeBtn" onclick="doFreeMint()">Claim FREE explorer</button>
+      <input type="number" id="qty" value="1" min="1" max="10" style="width:80px">
+      <button class="btn alt" id="paidBtn" onclick="doPaidMint()">Mint paid (0.001 BNB each)</button>
+    </div>
+    <p class="small">After a successful mint you get a share screen with a ready-to-post draft for each new explorer. Sharing is up to you — there is no posting gate.</p>
+  </div>
+
+  <div class="panel">
+    <h2><span class="no">Station 02 — Method</span>The way down</h2>
+    <div class="steps">
+      <div class="step"><div class="n">STA. 01 — ORDERS</div><b>Hand over the prompt</b>Copy the Mint prompt from the Agent prompts tab and paste it into your AI agent — or mint right here with your wallet.</div>
+      <div class="step"><div class="n">STA. 02 — PROVISIONS</div><b>Free first, then paid</b>The first explorer per wallet is free. Every next one costs exactly 0.001 BNB, and 100% of it goes to the treasury.</div>
+      <div class="step"><div class="n">STA. 03 — THE DROP</div><b>Down the rope</b>Your explorer arrives sealed, still in the dark. The next block’s hash fixes its chamber, depth, loot, helmet, tool, outfit and buddy. Anyone can trigger the reveal.</div>
+      <div class="step"><div class="n">STA. 04 — SURFACE</div><b>Show the loot</b>Share your find from the share screen, or trade it on the built-in Market — the NFT stays in your wallet until it sells.</div>
+    </div>
+  </div>
+
+  <div class="panel">
+    <h2><span class="no">Station 03 — Survey</span>The route down — five stations</h2>
+    <p class="small">One rope, five stations, widths of luck drawn to the odds. Scroll, and the lamp travels the line with you.</p>
+    <div class="route" id="routeBox">
+      <div id="lamp"></div>
+      <div class="srow" data-i="0"><span class="dot"></span><span class="sname">Entrance</span><span class="srange">0–199m down</span><span class="sodds">40%</span></div><div class="srow" data-i="1"><span class="dot"></span><span class="sname">Galleries</span><span class="srange">200–799m down</span><span class="sodds">27%</span></div><div class="srow" data-i="2"><span class="dot"></span><span class="sname">River Caves</span><span class="srange">800–1,999m down</span><span class="sodds">18%</span></div><div class="srow" data-i="3"><span class="dot"></span><span class="sname">Crystal Chambers</span><span class="srange">2,000–4,999m down</span><span class="sodds">11%</span></div><div class="srow" data-i="4"><span class="dot"></span><span class="sname">The Underdark</span><span class="srange">5,000–9,999m down</span><span class="sodds">4%</span></div>
+      <div class="rread" id="routeRead">At the Entrance — 40% of all explorers surface here.</div>
+    </div>
+  </div>
+
+  <div class="panel">
+    <h2><span class="no">Station 04 — Haul</span>Fresh from the dark</h2>
+    <div class="grid" id="latestGrid"><p class="small">Reading straight from the contract…</p></div>
+    <p style="margin-top:14px"><a href="#/market">Browse the market →</a></p>
+  </div>
+
+  <div class="panel">
+    <h2><span class="no">Station 05 — Chart</span>Survey chart — the deep map</h2>
+    <p class="small">Everything is decided from a future block hash, so nobody can pick an explorer’s fate in advance. Layer odds and loot tables:</p>
+    <table><tr><th>Chamber</th><th>Depth range</th><th>Odds</th><th>Loot</th></tr><tr><td><span class="chip" style="background:#5b4a36"></span>Entrance</td><td>0–199m</td><td>40%</td><td>Pebble, Copper Bell, Iron Lantern</td></tr><tr><td><span class="chip" style="background:#453723"></span>Galleries</td><td>200–799m</td><td>27%</td><td>Iron Spike, Silver Whistle, Gold Compass</td></tr><tr><td><span class="chip" style="background:#332716"></span>River Caves</td><td>800–1,999m</td><td>18%</td><td>Gold Statuette, Emerald Shard, Ruby Geode</td></tr><tr><td><span class="chip" style="background:#211709"></span>Crystal Chambers</td><td>2,000–4,999m</td><td>11%</td><td>Ruby Crown, Sapphire Cluster, Diamond Geode</td></tr><tr><td><span class="chip" style="background:#0d0702"></span>The Underdark</td><td>5,000–9,999m</td><td>4%</td><td>Diamond Earthheart, Hash Shard, Heart of the Mountain</td></tr></table>
+    <h3 style="margin:20px 0 8px;font-size:16px">THE KIT LEDGER — GEAR ODDS</h3>
+    <div class="gearwrap"><div class="gearbox"><h4>Helmet</h4><table><tr><td>Cloth Cap</td><td>30%</td></tr><tr><td>Lamp Helmet</td><td>25%</td></tr><tr><td>Bandana</td><td>20%</td></tr><tr><td>Caver Helm</td><td>14%</td></tr><tr><td>Crystal Helm</td><td>8%</td></tr><tr><td>Golden Crown Helm</td><td>3%</td></tr></table></div><div class="gearbox"><h4>Tool</h4><table><tr><td>Wooden Torch</td><td>30%</td></tr><tr><td>Stone Hammer</td><td>25%</td></tr><tr><td>Iron Pick</td><td>20%</td></tr><tr><td>Gold Lantern</td><td>14%</td></tr><tr><td>Diamond Pick</td><td>8%</td></tr><tr><td>Plasma Torch</td><td>3%</td></tr></table></div><div class="gearbox"><h4>Outfit</h4><table><tr><td>Trail Shirt</td><td>24%</td></tr><tr><td>Caver Rig</td><td>22%</td></tr><tr><td>Rope Harness</td><td>20%</td></tr><tr><td>Survey Suit</td><td>18%</td></tr><tr><td>Elder's Cloak</td><td>16%</td></tr></table></div><div class="gearbox"><h4>Buddy</h4><table><tr><td>None</td><td>82%</td></tr><tr><td>Bat</td><td>9%</td></tr><tr><td>Firefly</td><td>6%</td></tr><tr><td>Glow Worm</td><td>3%</td></tr></table></div></div>
+  </div>
+
+  <div class="panel">
+    <h2><span class="no">Station 06 — Notes</span>Expedition notes</h2>
+    <p><b>Why agents?</b> Minting works from any wallet, but the full routine — read the rules in skill.md, preview the transaction, ask before executing, then chalk the loot on the board — is written for AI agents. Human cavers welcome.</p>
+    <p><b>Why is my explorer still sealed?</b> An explorer stays sealed until someone calls reveal — anyone can, it costs only gas. Sealed plates in this notebook hang in the dark, swaying on the line.</p>
+    <p><b>Is the art on-chain?</b> Yes. Traits, and the animated SVG you see, are generated by the contract itself from the reveal seed.</p>
+    <p><b>Where can I trade?</b> On the built-in Market (BNB, non-custodial, 2.5% fee to the treasury) or any BNB Chain marketplace that reads the contract.</p>
+    <p><b>What does the treasury get?</b> 100% of paid mint proceeds and the 2.5% market fee. No pool, no split.</p>
+  </div>
+</section>
+
+<section id="view-market" class="hide">
+  <h1 class="vh">The Finds Exchange</h1>
+  <p class="vsub">Buy and sell explorers in BNB. Non-custodial: a listed explorer stays in the seller’s wallet until it sells. 2.5% fee to the treasury on every sale.</p>
+  <div class="stats">
+    <div class="stat"><div class="k">Listed</div><div class="v" id="mkListed">—</div></div>
+    <div class="stat"><div class="k">Floor</div><div class="v" id="mkFloor">—</div></div>
+    <div class="stat"><div class="k">Sales</div><div class="v" id="mkSales">—</div></div>
+    <div class="stat"><div class="k">Volume</div><div class="v" id="mkVolume">—</div></div>
+  </div>
+  <div class="filters">
+    <select id="fLayer"><option value="">All layers</option><option value="0">Entrance</option><option value="1">Galleries</option><option value="2">River Caves</option><option value="3">Crystal Chambers</option><option value="4">The Underdark</option></select>
+    <select id="fLoot"><option value="">All loot</option><option>Pebble</option><option>Copper Bell</option><option>Iron Lantern</option><option>Iron Spike</option><option>Silver Whistle</option><option>Gold Compass</option><option>Gold Statuette</option><option>Emerald Shard</option><option>Ruby Geode</option><option>Ruby Crown</option><option>Sapphire Cluster</option><option>Diamond Geode</option><option>Diamond Earthheart</option><option>Hash Shard</option><option>Heart of the Mountain</option></select>
+    <select id="fSort"><option value="plow">Price: low → high</option><option value="phigh">Price: high → low</option><option value="deep">Deepest first</option><option value="new">Newest id</option></select>
+    <button class="btn ghost" onclick="loadMarket()">Refresh</button>
+  </div>
+  <div class="grid" id="marketGrid"><p class="small">Loading listings…</p></div>
+</section>
+<section id="view-activity" class="hide">
+  <h1 class="vh">Expedition Wire</h1>
+  <p class="vsub">Every mint, listing and sale on BNB Chain, read live from the Spelunkers contracts. Times in UTC.</p>
+  <div class="panel" id="activityList"><p class="small">Loading activity…</p></div>
+</section>
+<section id="view-token" class="hide">
+  <div class="detail">
+    <div class="artbox"><img class="bigimg" id="tkImg" alt="token artwork"><p class="cap small" id="tkCap"></p></div>
+    <div>
+      <h1 class="vh" id="tkTitle">Spelunkers #?</h1>
+      <table id="tkTraits"></table>
+      <div class="panel" style="margin-top:16px" id="tkMarketBox"></div>
+      <div class="mintbox" style="margin-top:12px">
+        <button class="btn alt" id="tkShareBtn">Copy post draft</button>
+        <button class="btn ghost" onclick="copyText(location.href)">Copy link</button>
+        <a class="btn ghost" id="tkScan" target="_blank" rel="noopener" style="text-decoration:none">BscScan</a>
+      </div>
+    </div>
+  </div>
+</section>
+<section id="view-share" class="hide">
+  <h1 class="vh">Back at the surface</h1>
+  <p class="vsub">One ready-to-post draft per explorer. Every draft links back to the explorer itself. Posting is optional — your finds are yours either way.</p>
+  <div class="mintbox" style="margin-bottom:16px"><button class="btn" onclick="copyAllPosts()">Copy all posts</button><a class="btn alt" href="#/market" style="text-decoration:none">Market</a></div>
+  <div id="shareList"></div>
+</section>
+<section id="view-collection" class="hide">
+  <h1 class="vh">My Finds</h1>
+  <p class="vsub" id="collState">Connect a wallet to see your explorers.</p>
+  <div class="grid" id="collGrid"></div>
+</section>
+<section id="view-prompts" class="hide">
+  <h1 class="vh">Orders for your agent</h1>
+  <p class="vsub">Copy, paste into your agent, done. Agents preview every transaction first and only execute after you approve it.</p>
+  <div id="promptList"></div>
+</section>
+</main>
+<footer>
+  Spelunkers — BNB Chain · the survey is kept on-chain · artwork generated by the contract<br>
+  NFT contract: <a href="https://bscscan.com/address/0xF8654BB769B48fD4c619bfFD5a5fEED066d6a85F" target="_blank" rel="noopener">0xF865…a85F</a> ·
+  Market: <a href="https://bscscan.com/address/0x3dd1FC220c28b23AAa3099C19C24D20b6FfFEC97" target="_blank" rel="noopener">0x3dd1…EC97</a> ·
+  <a href="skill.md">skill.md</a><br>
+  Spelunkers is a collectible, not an investment.
+</footer>
+<div class="toast" id="toast"></div>
+<script>
+const CONTRACT = "0xF8654BB769B48fD4c619bfFD5a5fEED066d6a85F";
+const MARKET = "0x3dd1FC220c28b23AAa3099C19C24D20b6FfFEC97";
+const SITE = "https://spelunkers.github.io/spelunkers/";
+const WC_PROJECT_ID = "ff5985647ed78916bed0155d2ff84a1c";
+const PRICE_WEI = 1000000000000000n;
+const RPCS = ["https://bsc-dataseed.binance.org", "https://bsc-dataseed1.binance.org", "https://bsc-dataseed2.binance.org", "https://bsc-rpc.publicnode.com"];
+const LOG_RPC = "https://bsc-mainnet.nodereal.io/v1/64a9df0874fb4a93b9d0a3849de012d3";
+const CHAR = "explorer";
+const LAYERS = ["Entrance", "Galleries", "River Caves", "Crystal Chambers", "The Underdark"];
+const LOOT = ["Pebble", "Copper Bell", "Iron Lantern", "Iron Spike", "Silver Whistle", "Gold Compass", "Gold Statuette", "Emerald Shard", "Ruby Geode", "Ruby Crown", "Sapphire Cluster", "Diamond Geode", "Diamond Earthheart", "Hash Shard", "Heart of the Mountain"];
+const HELMETS = ["Cloth Cap", "Lamp Helmet", "Bandana", "Caver Helm", "Crystal Helm", "Golden Crown Helm"], TOOLS = ["Wooden Torch", "Stone Hammer", "Iron Pick", "Gold Lantern", "Diamond Pick", "Plasma Torch"], OUTFITS = ["Trail Shirt", "Caver Rig", "Rope Harness", "Survey Suit", "Elder's Cloak"], BUDDIES = ["None", "Bat", "Firefly", "Glow Worm"];
+const LAYER_COLORS = ["#5b4a36", "#453723", "#332716", "#211709", "#0d0702"];
+const TOPICS = {
+  minted: "0x69dff97591dfad68d690a0deccd16ef2aaf0b65205732bf647a9e5b129b77099",
+  listed: "0x6e16e8064e3c8254cef11e01e152416398602d7e8785f743f1c2f93a9a15ff35",
+  sold: "0x9be8a5ca22b7e6e81f04b5879f0248227bb770114291bd47dfaee4c3a82ad60e",
+  cancelled: "0x93ec4766fcd2d9dfdceab8f2e13ba0d9d826645cf03167fdb92b3b7359b5248c",
+  revealed: "0x3e3aa9978fd7fc7ad5bfa8c2fc5c6d568f4045fbfd3bfa29c5fe41e81a794adb"
+};
+const SEL = {
+  status: "0x200d2ed2", freeMint: "0x5b70ea9f", mint: "0xa0712d68", reveal: "0xc2ca0ac5",
+  traitsOf: "0x5efab6e4", tokenURI: "0xc87b56dd", tokensOfOwner: "0x8462151c",
+  ownerOf: "0x6352211e", freeUsed: "0x2626c4bf", mintedBy: "0x3cef28d2",
+  setApprovalForAll: "0xa22cb465", isApprovedForAll: "0xe985e9c5",
+  listingOf: "0xe3404981", list: "0x50fd7367", cancelListing: "0x305a67a8", buy: "0xd96a094a"
+};
+
+// ---------- tiny ABI helpers ----------
+const pad = (h) => h.padStart(64, "0");
+const encUint = (v) => pad(BigInt(v).toString(16));
+const encAddr = (a) => pad(a.toLowerCase().replace("0x", ""));
+const encBool = (b) => pad(b ? "1" : "0");
+const word = (hex, i) => hex.slice(2 + i * 64, 2 + (i + 1) * 64);
+const wUint = (hex, i) => BigInt("0x" + word(hex, i));
+const wAddr = (hex, i) => "0x" + word(hex, i).slice(24);
+const wBool = (hex, i) => wUint(hex, i) !== 0n;
+function wString(hex, i) {
+  const off = Number(wUint(hex, i)) * 2 + 2;
+  const len = Number(BigInt("0x" + hex.slice(off, off + 64)));
+  const bytes = new Uint8Array(len);
+  for (let k = 0; k < len; k++) bytes[k] = parseInt(hex.slice(off + 64 + k * 2, off + 66 + k * 2), 16);
+  return new TextDecoder().decode(bytes);
+}
+const fmtBNB = (wei) => { const s = (Number(wei) / 1e18).toFixed(6).replace(/0+$/, "").replace(/\.$/, ".0"); return s; };
+const short = (a) => a.slice(0, 6) + "…" + a.slice(-4);
+
+let rpcIdx = 0;
+async function rpcJson(method, params, url) {
+  const r = await fetch(url || RPCS[rpcIdx % RPCS.length], { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ jsonrpc: "2.0", id: 1, method, params }) });
+  const j = await r.json();
+  if (j.error) throw new Error(j.error.message);
+  return j.result;
+}
+async function call(data, to) {
+  for (let k = 0; k < RPCS.length; k++) {
+    try { return await rpcJson("eth_call", [{ to: to || CONTRACT, data }, "latest"], RPCS[(rpcIdx + k) % RPCS.length]); }
+    catch (e) { if (k === RPCS.length - 1) throw e; }
+  }
+}
+async function getLogs(address, topic, span) {
+  const latest = Number(BigInt(await rpcJson("eth_blockNumber", [], LOG_RPC)));
+  const from = Math.max(0, latest - (span || 45000));
+  return rpcJson("eth_getLogs", [{ address, topics: [topic], fromBlock: "0x" + from.toString(16), toBlock: "latest" }], LOG_RPC);
+}
+async function getStatus() { const h = await call(SEL.status); return { minted: Number(wUint(h, 0)), cap: Number(wUint(h, 1)), price: wUint(h, 2), left: Number(wUint(h, 3)) }; }
+async function getTraits(id) {
+  const h = await call(SEL.traitsOf + encUint(id));
+  return { revealed: wBool(h, 0), layer: Number(wUint(h, 1)), depth: Number(wUint(h, 2)), loot: Number(wUint(h, 3)), helmet: Number(wUint(h, 4)), tool: Number(wUint(h, 5)), outfit: Number(wUint(h, 6)), buddy: Number(wUint(h, 7)) };
+}
+async function getImage(id) {
+  try {
+    const h = await call(SEL.tokenURI + encUint(id));
+    const uri = wString(h, 0);
+    const meta = JSON.parse(atob(uri.split(",")[1]));
+    return { img: meta.image, name: meta.name };
+  } catch (e) { return { img: "", name: "" }; }
+}
+async function getListing(id) { const h = await call(SEL.listingOf + encUint(id), MARKET); return { seller: wAddr(h, 0), price: wUint(h, 1), active: wBool(h, 2) }; }
+
+// ---------- wallet ----------
+let provider = null, account = null;
+async function loadWC() {
+  if (window["@walletconnect/ethereum-provider"]) return true;
+  for (const u of ["https://unpkg.com/@walletconnect/ethereum-provider@2.21.0/dist/index.umd.js", "https://cdn.jsdelivr.net/npm/@walletconnect/ethereum-provider@2.21.0/dist/index.umd.js"]) {
+    try { await new Promise((res, rej) => { const sc = document.createElement("script"); sc.src = u; sc.onload = res; sc.onerror = rej; document.head.appendChild(sc); }); if (window["@walletconnect/ethereum-provider"]) return true; } catch (e) {}
+  }
+  return false;
+}
+async function connectWallet() {
+  if (window.ethereum) { provider = window.ethereum; }
+  else {
+    if (!(await loadWC())) { toast("NO BROWSER WALLET FOUND. INSTALL METAMASK — OR USE THE AGENT PROMPTS."); return null; }
+    provider = await window["@walletconnect/ethereum-provider"].EthereumProvider.init({ projectId: WC_PROJECT_ID, chains: [56], optionalChains: [56], showQrModal: true, rpcMap: { 56: "https://bsc-dataseed.binance.org" } });
+    await provider.connect();
+  }
+  const accs = await provider.request({ method: "eth_requestAccounts" });
+  account = accs[0];
+  try { await provider.request({ method: "wallet_switchEthereumChain", params: [{ chainId: "0x38" }] }); } catch (e) {}
+  document.getElementById("connectBtn").textContent = short(account);
+  refreshWalletState();
+  if (route().view === "collection") loadCollection();
+  return account;
+}
+async function sendTx(to, data, valueWei) {
+  if (!account) { await connectWallet(); if (!account) throw new Error("no wallet"); }
+  const txHash = await provider.request({ method: "eth_sendTransaction", params: [{ from: account, to, data, value: "0x" + (valueWei || 0n).toString(16) }] });
+  toast("Transaction sent: " + txHash.slice(0, 14) + "… waiting for confirmation");
+  for (let i = 0; i < 60; i++) {
+    const r = await rpcJson("eth_getTransactionReceipt", [txHash]);
+    if (r) { if (r.status !== "0x1") throw new Error("transaction reverted"); return txHash; }
+    await new Promise(r2 => setTimeout(r2, 2500));
+  }
+  return txHash;
+}
+async function refreshWalletState() {
+  const el = document.getElementById("walletState");
+  if (!account) { el.textContent = "Connect a wallet to mint. Your free " + CHAR + " needs no payment — just gas."; return; }
+  const fu = wBool(await call(SEL.freeUsed + encAddr(account)), 0);
+  const mb = Number(wUint(await call(SEL.mintedBy + encAddr(account)), 0));
+  el.innerHTML = "Wallet " + short(account) + " · minted by you: <b>" + mb + " / 10</b> · free " + CHAR + ": <b>" + (fu ? "already claimed" : "AVAILABLE") + "</b>";
+  document.getElementById("freeBtn").disabled = fu || mb >= 10;
+}
+
+// ---------- minting ----------
+async function doFreeMint() {
+  try {
+    await sendTx(CONTRACT, SEL.freeMint, 0n);
+    const ids = await myTokenIds();
+    location.hash = "#/minted?ids=" + ids.join(",");
+  } catch (e) { toast("Mint failed: " + (e.message || e)); }
+}
+async function doPaidMint() {
+  try {
+    const q = Math.max(1, Math.min(10, Number(document.getElementById("qty").value || 1)));
+    const before = await myTokenIds();
+    await sendTx(CONTRACT, SEL.mint + encUint(q), PRICE_WEI * BigInt(q));
+    const after = await myTokenIds();
+    const fresh = after.filter(x => !before.includes(x));
+    location.hash = "#/minted?ids=" + (fresh.length ? fresh : after).join(",");
+  } catch (e) { toast("Mint failed: " + (e.message || e)); }
+}
+async function myTokenIds() {
+  if (!account) return [];
+  const h = await call(SEL.tokensOfOwner + encAddr(account));
+  const off = Number(wUint(h, 0)) * 2 + 2;
+  const len = Number(BigInt("0x" + h.slice(off, off + 64)));
+  const out = [];
+  for (let k = 0; k < len; k++) out.push(Number(BigInt("0x" + h.slice(off + 64 + k * 64, off + 128 + k * 64))));
+  return out;
+}
+async function doReveal(id) { try { await sendTx(CONTRACT, SEL.reveal + encUint(id), 0n); toast("Revealed!"); render(); } catch (e) { toast("Reveal failed: " + (e.message || e)); } }
+async function doBuy(id, price) { try { await sendTx(MARKET, SEL.buy + encUint(id), price); toast("Bought! It is yours now."); render(); } catch (e) { toast("Buy failed: " + (e.message || e)); } }
+async function doApproveThenList(id) {
+  const priceTxt = prompt("Price in BNB for #" + id + "?");
+  if (!priceTxt) return;
+  const wei = BigInt(Math.round(parseFloat(priceTxt) * 1e18));
+  try {
+    const ok = wBool(await call(SEL.isApprovedForAll + encAddr(account) + encAddr(MARKET)), 0);
+    if (!ok) await sendTx(CONTRACT, SEL.setApprovalForAll + encAddr(MARKET) + encBool(true), 0n);
+    await sendTx(MARKET, SEL.list + encUint(id) + encUint(wei), 0n);
+    toast("Listed #" + id + " for " + fmtBNB(wei) + " BNB"); render();
+  } catch (e) { toast("List failed: " + (e.message || e)); }
+}
+async function doDelist(id) { try { await sendTx(MARKET, SEL.cancelListing + encUint(id), 0n); toast("Delisted"); render(); } catch (e) { toast("Delist failed: " + (e.message || e)); } }
+
+// ---------- rendering ----------
+function toast(msg) { const t = document.getElementById("toast"); t.textContent = msg; t.style.display = "block"; setTimeout(() => t.style.display = "none", 4200); }
+function copyText(txt) { navigator.clipboard.writeText(txt).then(() => toast("Copied")); }
+function shareText(id, tr) {
+  if (!tr || !tr.revealed) return "I just dug up Spelunkers #" + id + " ⛏ Still sealed — the chain decides how deep it landed. Only AI agents can dig. " + SITE + "#/token/" + id;
+  return "I just dug up Spelunkers #" + id + " ⛏ " + LAYERS[tr.layer] + " · -" + tr.depth + "m · " + LOOT[tr.layer * 3 + tr.loot] + ", " + TOOLS[tr.tool] + " · " + HELMETS[tr.helmet] + ". Only AI agents can dig. " + SITE + "#/token/" + id;
+}
+function cardHTML(id, tr, extra) {
+  const meta = !tr ? "…" : (!tr.revealed ? "In transit…" : LAYERS[tr.layer] + " · -" + tr.depth + "m · " + LOOT[tr.layer * 3 + tr.loot]);
+  return '<div class="card' + (tr && !tr.revealed ? " sealed" : "") + '"><a href="#/token/' + id + '"><img id="img-' + id + '" alt=""></a>' + (tr && !tr.revealed ? '<div class="sealtag">Sealed</div>' : "") + '<div class="id">#' + id + '</div><div class="meta">' + meta + "</div>" + (extra || "") + "</div>";
+}
+async function fillImg(id) { const { img } = await getImage(id); const el = document.getElementById("img-" + id); if (el && img) el.src = img; }
+
+async function loadHome() {
+  const st = await getStatus();
+  document.getElementById("heroCount").textContent = st.minted.toLocaleString();
+  document.getElementById("stMinted").textContent = st.minted.toLocaleString();
+  document.getElementById("stLeft").textContent = st.left.toLocaleString();
+  const grid = document.getElementById("latestGrid");
+  const ids = [];
+  for (let id = st.minted; id >= Math.max(1, st.minted - 7); id--) ids.push(id);
+  if (!ids.length) { grid.innerHTML = '<p class="small">Nothing dug yet — be the first.</p>'; return; }
+  const cards = [];
+  const trs = {};
+  for (const id of ids) { const tr = await getTraits(id); trs[id] = tr; cards.push(cardHTML(id, tr, (tr && !tr.revealed) ? "<button class='btn alt' onclick='doReveal(" + id + ")'>Reveal</button>" : "")); }
+  grid.innerHTML = cards.join("");
+  for (const id of ids) fillImg(id);
+  let heroId = ids.find(x => trs[x] && trs[x].revealed);
+  if (heroId === undefined && st.minted >= 1) { const t1 = await getTraits(1).catch(() => null); if (t1 && t1.revealed) heroId = 1; }
+  if (heroId !== undefined) {
+    const top = await getImage(heroId);
+    const tr0 = trs[heroId] || await getTraits(heroId);
+    if (top.img) { document.getElementById("heroImg").src = top.img; document.getElementById("heroCap").textContent = "#" + heroId + " · " + LAYERS[tr0.layer] + " · -" + tr0.depth + "m"; }
+  } else { document.getElementById("heroCap").textContent = "The first revealed find will surface here."; }
+}
+
+let marketCache = [];
+async function loadMarket() {
+  const grid = document.getElementById("marketGrid");
+  grid.innerHTML = '<p class="small">Loading listings…</p>';
+  const listedLogs = await getLogs(MARKET, TOPICS.listed);
+  const soldLogs = await getLogs(MARKET, TOPICS.sold);
+  let volume = 0n; for (const l of soldLogs) volume += BigInt("0x" + l.data.slice(2, 66));
+  document.getElementById("mkSales").textContent = soldLogs.length;
+  document.getElementById("mkVolume").textContent = fmtBNB(volume) + " BNB";
+  const cand = [...new Set(listedLogs.map(l => Number(BigInt(l.topics[2]))))];
+  marketCache = [];
+  for (const id of cand) {
+    const li = await getListing(id);
+    if (!li.active) continue;
+    const tr = await getTraits(id).catch(() => null);
+    marketCache.push({ id, price: li.price, seller: li.seller, tr });
+  }
+  document.getElementById("mkListed").textContent = marketCache.length;
+  document.getElementById("mkFloor").textContent = marketCache.length ? fmtBNB(marketCache.reduce((a, b) => a.price < b.price ? a : b).price) + " BNB" : "—";
+  renderMarket();
+}
+function renderMarket() {
+  const fl = document.getElementById("fLayer").value, flo = document.getElementById("fLoot").value, so = document.getElementById("fSort").value;
+  let rows = marketCache.filter(r => (fl === "" || (r.tr && r.tr.revealed && r.tr.layer === Number(fl))) && (flo === "" || (r.tr && r.tr.revealed && LOOT[r.tr.layer * 3 + r.tr.loot] === flo)));
+  rows.sort((a, b) => so === "phigh" ? (a.price < b.price ? 1 : -1) : so === "deep" ? ((b.tr ? b.tr.depth : 0) - (a.tr ? a.tr.depth : 0)) : so === "new" ? b.id - a.id : (a.price > b.price ? 1 : -1));
+  const grid = document.getElementById("marketGrid");
+  if (!rows.length) { grid.innerHTML = '<p class="small">No listings match. Check back soon — or list one of yours.</p>'; return; }
+  grid.innerHTML = rows.map(r => cardHTML(r.id, r.tr, '<div class="price">' + fmtBNB(r.price) + ' BNB</div><button class="btn" onclick="doBuy(' + r.id + "," + r.price.toString() + 'n)">BUY</button>')).join("");
+  for (const r of rows) fillImg(r.id);
+}
+["fLayer", "fLoot", "fSort"].forEach(id => document.addEventListener("change", e => { if (e.target.id === id) renderMarket(); }));
+
+async function loadActivity() {
+  const el = document.getElementById("activityList");
+  el.innerHTML = '<p class="small">Loading activity…</p>';
+  const [mints, lists, sales, reveals] = await Promise.all([getLogs(CONTRACT, TOPICS.minted), getLogs(MARKET, TOPICS.listed), getLogs(MARKET, TOPICS.sold), getLogs(CONTRACT, TOPICS.revealed)]);
+  const rows = [];
+  for (const l of mints) rows.push({ b: Number(BigInt(l.blockNumber)), h: '<span>⛏ <b>Mint</b></span><span>' + short("0x" + l.topics[1].slice(26)) + " got " + Number(wUint(l.data, 0)) + " (first #" + Number(wUint(l.data, 1)) + ")" + (wBool(l.data, 2) ? " · FREE" : " · paid") + "</span>" });
+  for (const l of lists) rows.push({ b: Number(BigInt(l.blockNumber)), h: '<span>🏷️ <b>Listed</b></span><span>#' + Number(BigInt(l.topics[2])) + " for " + fmtBNB(BigInt("0x" + l.data.slice(2, 66))) + " BNB</span>" });
+  for (const l of sales) rows.push({ b: Number(BigInt(l.blockNumber)), h: '<span>💰 <b>Sold</b></span><span>#' + Number(BigInt(l.topics[3])) + " for " + fmtBNB(BigInt("0x" + l.data.slice(2, 66))) + " BNB</span>" });
+  for (const l of reveals) rows.push({ b: Number(BigInt(l.blockNumber)), h: '<span>🔓 <b>Revealed</b></span><span>#' + Number(BigInt(l.topics[1])) + " · " + LAYERS[Number(wUint(l.data, 0))] + " · -" + Number(wUint(l.data, 1)) + "m</span>" });
+  rows.sort((a, b) => b.b - a.b);
+  el.innerHTML = rows.length ? rows.slice(0, 80).map(r => '<div class="act">' + r.h + '<span class="t">block ' + r.b + "</span></div>").join("") : '<p class="small">No activity in the recent window yet.</p>';
+}
+
+async function loadToken(id) {
+  const tr = await getTraits(id).catch(() => null);
+  const { img } = await getImage(id);
+  document.getElementById("tkImg").src = img;
+  document.getElementById("tkTitle").textContent = "Spelunkers #" + id;
+  document.getElementById("tkScan").href = "https://bscscan.com/token/" + CONTRACT + "?a=" + id;
+  let owner = "";
+  try { owner = wAddr(await call(SEL.ownerOf + encUint(id)), 0); } catch (e) {}
+  document.getElementById("tkCap").textContent = owner ? "Owner " + short(owner) : "";
+  const rows = [];
+  if (!tr) rows.push(["Status", "Unknown"]);
+  else if (!tr.revealed) rows.push(["Status", "Sealed — in transit"], ["Reveal", "Available now — anyone can reveal it"]);
+  else {
+    rows.push(["Layer", LAYERS[tr.layer]], ["DEPTH", "-" + tr.depth + "m"], ["Loot", LOOT[tr.layer * 3 + tr.loot]], ["Helmet", HELMETS[tr.helmet]], ["Tool", TOOLS[tr.tool]], ["Outfit", OUTFITS[tr.outfit]], ["Buddy", BUDDIES[tr.buddy]]);
+  }
+  if (owner) rows.push(["Owner", short(owner)]);
+  document.getElementById("tkTraits").innerHTML = rows.map(r => "<tr><th>" + r[0] + "</th><td>" + r[1] + "</td></tr>").join("");
+  const li = await getListing(id);
+  const box = document.getElementById("tkMarketBox");
+  let h = "";
+  if (li.active) h = "<b>For sale: " + fmtBNB(li.price) + " BNB</b><br><span class='small'>Seller gets " + fmtBNB(li.price - li.price * 250n / 10000n) + " BNB · fee " + fmtBNB(li.price * 250n / 10000n) + " BNB</span><br><button class='btn' style='margin-top:10px' onclick='doBuy(" + id + "," + li.price.toString() + "n)'>Buy with wallet</button>" + (account && li.seller.toLowerCase() === account.toLowerCase() ? " <button class='btn ghost' onclick='doDelist(" + id + ")'>Delist</button>" : "");
+  else h = "<b>Not listed.</b>" + (account && owner && account.toLowerCase() === owner.toLowerCase() ? "<br><button class='btn' style='margin-top:10px' onclick='doApproveThenList(" + id + ")'>List for sale</button>" : "");
+  if (tr && !tr.revealed) h += "<br><button class='btn alt' style='margin-top:10px' onclick='doReveal(" + id + ")'>Reveal now</button>";
+  box.innerHTML = h;
+  document.getElementById("tkShareBtn").onclick = () => { const t = shareText(id, tr); copyText(t); };
+}
+
+async function loadShare(ids) {
+  const el = document.getElementById("shareList");
+  el.innerHTML = "";
+  window._shareTexts = [];
+  for (const id of ids) {
+    const tr = await getTraits(id).catch(() => null);
+    const t = shareText(id, tr);
+    window._shareTexts.push(t);
+    const d = document.createElement("div");
+    d.className = "panel";
+    d.innerHTML = '<div style="display:grid;grid-template-columns:120px 1fr;gap:16px;align-items:start"><img id="simg-' + id + '" style="width:120px;border-radius:8px;image-rendering:pixelated;background:#10131a"><div><b>#' + id + "</b><div class='sharetext'>" + t + "</div><div class='mintbox' style='margin-top:10px'><button class='btn' onclick='copyText(window._shareTexts[" + (window._shareTexts.length - 1) + "])'>Copy post</button><a class='btn alt' href='#/token/" + id + "' style='text-decoration:none'>Details</a>" + (tr && !tr.revealed ? "<button class='btn ghost' onclick='doReveal(" + id + ")'>Reveal</button>" : "") + "</div></div></div>";
+    el.appendChild(d);
+    fillImg(id).then(() => { const g = document.getElementById("img-" + id); });
+    getImage(id).then(({ img }) => { const e2 = document.getElementById("simg-" + id); if (e2 && img) e2.src = img; });
+  }
+}
+function copyAllPosts() { copyText((window._shareTexts || []).join("\n\n---\n\n")); }
+
+async function loadCollection() {
+  const grid = document.getElementById("collGrid");
+  if (!account) { document.getElementById("collState").textContent = "Connect a wallet to see your collection."; grid.innerHTML = ""; return; }
+  const ids = await myTokenIds();
+  document.getElementById("collState").innerHTML = "Wallet " + short(account) + " holds <b>" + ids.length + "</b> explorers.";
+  if (!ids.length) { grid.innerHTML = '<p class="small">Nothing yet — your first one is free on the Dig tab.</p>'; return; }
+  const cards = [];
+  const trs = {};
+  for (const id of ids) {
+    const tr = await getTraits(id).catch(() => null);
+    cards.push(cardHTML(id, tr, (tr && !tr.revealed ? "<button class='btn alt' onclick='doReveal(" + id + ")'>Reveal</button>" : "") + "<button class='btn ghost' onclick='doApproveThenList(" + id + ")'>Sell</button>"));
+  }
+  grid.innerHTML = cards.join("");
+  for (const id of ids) fillImg(id);
+}
+
+const PROMPTS = [
+  ["⛏ Mint + share", "Read " + SITE + "skill.md and follow it exactly to mint Spelunkers explorers for me on BNB Chain with my wallet — then build my share package. This is ONE chained flow: never stop after the mint.\n\n1. Read skill.md and the live config, then read mintStatus(myWallet). Tell me the price, how many I can still mint (max 10 per wallet), and whether my FREE explorer (the first one per wallet) is still available.\n2. Ask me to pick: FREE explorer or PAID explorers (0.001 BNB each) — and how many.\n3. Show me the preview: total cost, gas estimate and the contract address. Execute ONLY after I explicitly say yes.\n4. Execute the mint, then read the Minted events from the receipt to get my new token IDs.\n5. IMMEDIATELY build the share package: one ready-to-post X draft per new token — a short hook line plus its link " + SITE + "#/token/<id> (no @-tags) — plus my all-tokens share page: " + SITE + "#/minted?ids=<ids>.\n6. Show me the drafts and ask for my approval. Post them ONLY after I approve — or hand me the share page so I can post in one tap. NEVER post without my approval.\n7. Final report: my new token IDs, the transaction links, and the share links."],
+  ["🔓 Reveal", "Read " + SITE + "skill.md. Reveal my sealed Spelunkers explorers (token IDs: <IDS>) on BNB Chain. Call reveal(id) for each, preview first, execute only after I approve, then show me the traits each one landed with."],
+  ["📣 Share tokens I already own", "Read " + SITE + "skill.md. I already own Spelunkers explorers and want to share them — no minting in this flow.\n1. Call tokensOfOwner(myWallet) and list every explorer I own.\n2. For each one, build a ready-to-post X draft: a short hook line plus its link " + SITE + "#/token/<id> (no @-tags).\n3. Give me my all-tokens share page: " + SITE + "#/minted?ids=<all my ids>.\n4. Show me the drafts and post them ONLY after I approve — or hand me the share page so I can post in one tap. NEVER post without my approval."],
+  ["🏷️ Sell", "Read " + SITE + "skill.md. I want to list Spelunkers #<ID> for <PRICE> BNB on the built-in Market.\n1. Check that my wallet owns it.\n2. If the market is not approved yet, preview setApprovalForAll(market, true) and ask me first.\n3. Preview list(<ID>, <PRICE in wei>) on the market contract, show me the details and execute only after I approve.\n4. Give me the link " + SITE + "#/token/<ID> and an X post draft. 2.5% fee goes to the treasury on a sale. The NFT stays in my wallet until it sells."],
+  ["🛒 Buy", "Read " + SITE + "skill.md. I want to buy Spelunkers #<ID> from the built-in Market. Call listingOf(<ID>) on the market contract and stop if it is not active. Show me the price and the preview of buy(<ID>) with value = price. Execute only after I approve. Then give me " + SITE + "#/token/<ID> and an X post draft."],
+  ["🎒 My collection", "Read " + SITE + "skill.md. List every Spelunkers explorer my wallet owns (tokensOfOwner), with each one's layer, depth and loot from traitsOf. Give me the links " + SITE + "#/token/<id> and a share screen: " + SITE + "#/minted?ids=<all my ids>."]
+];
+function loadPrompts() {
+  document.getElementById("promptList").innerHTML = PROMPTS.map((p, i) => '<div class="panel"><h2>' + p[0] + '</h2><div class="prompt" id="prompt-' + i + '">' + p[1].replace(/</g, "&lt;") + '</div><button class="btn" style="margin-top:10px" onclick="copyText(PROMPTS[' + i + '][1])">Copy prompt</button></div>').join("");
+}
+
+// ---------- router ----------
+function route() {
+  const h = location.hash || "#/";
+  const [path, qs] = h.slice(1).split("?");
+  const parts = path.split("/").filter(Boolean);
+  if (parts[0] === "market") return { view: "market" };
+  if (parts[0] === "activity") return { view: "activity" };
+  if (parts[0] === "prompts") return { view: "prompts" };
+  if (parts[0] === "collection") return { view: "collection" };
+  if (parts[0] === "token") return { view: "token", id: Number(parts[1]) };
+  if (parts[0] === "minted") { const q = new URLSearchParams(qs || ""); return { view: "share", ids: (q.get("ids") || "").split(",").map(Number).filter(Boolean) }; }
+  return { view: "home" };
+}
+function render() {
+  const r = route();
+  for (const v of ["home", "market", "activity", "token", "share", "collection", "prompts"]) {
+    document.getElementById("view-" + v).classList.toggle("hide", v !== r.view);
+  }
+  document.querySelectorAll("nav a").forEach(a => a.classList.toggle("on", a.dataset.nav === r.view));
+  if (r.view === "home") loadHome().catch(e => console.error(e));
+  if (r.view === "market") loadMarket().catch(e => toast("Market load failed: " + e.message));
+  if (r.view === "activity") loadActivity().catch(e => toast("Activity load failed: " + e.message));
+  if (r.view === "token") loadToken(r.id).catch(e => toast("Token load failed: " + e.message));
+  if (r.view === "share") loadShare(r.ids).catch(e => console.error(e));
+  if (r.view === "collection") loadCollection().catch(e => console.error(e));
+  if (r.view === "prompts") loadPrompts();
+  window.scrollTo(0, 0);
+}
+window.addEventListener("hashchange", render);
+window.addEventListener("scroll", () => {
+  const d = document.documentElement;
+  const p = d.scrollTop / Math.max(1, d.scrollHeight - d.clientHeight);
+  document.getElementById("gauge").textContent = "-" + String(Math.round(p * 9999)).padStart(4, "0") + "m";
+});
+render();
+if (window.ethereum) { window.ethereum.request({ method: "eth_accounts" }).then(a => { if (a && a[0]) { provider = window.ethereum; account = a[0]; document.getElementById("connectBtn").textContent = short(account); refreshWalletState(); } }).catch(() => {}); }
+
+</script>
+<script>
+(function(){
+  var sec=document.getElementById("routeBox"); if(!sec) return;
+  var lamp=document.getElementById("lamp"), read=document.getElementById("routeRead");
+  var rows=sec.querySelectorAll(".srow");
+  var layers=["Entrance", "Galleries", "River Caves", "Crystal Chambers", "The Underdark"], unit="m";
+  function upd(){
+    var r=sec.getBoundingClientRect(), vh=window.innerHeight||800;
+    var p=(vh*0.72-r.top)/Math.max(1,r.height); p=Math.max(0,Math.min(1,p));
+    lamp.style.top=(22+p*(r.height-110))+"px";
+    var depth=Math.round(p*9999), li=depth<200?0:depth<800?1:depth<2000?2:depth<5000?3:4;
+    rows.forEach(function(row,i){ row.classList.toggle("on", i===li); });
+    read.textContent="Lamp at \u2212"+depth+unit+" \u00b7 "+layers[li]+" \u00b7 "+[40,27,18,11,4][li]+"% of all explorers surface here.";
+  }
+  window.addEventListener("scroll",upd,{passive:true}); window.addEventListener("resize",upd); upd();
+})();
+</script>
+</body>
+</html>
